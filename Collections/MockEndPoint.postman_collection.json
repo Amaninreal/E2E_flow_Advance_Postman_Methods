@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "4279ddea-24fa-4f8b-bfe2-bd5218adff87",
+		"name": "MockEndPoint",
+		"description": "# Environment: MockEndPoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "40807949"
+	},
+	"item": [
+		{
+			"name": "getApiTesting",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"// storing the course name under the \"Javascript\" category in the environment variable",
+							"jsonData.data.forEach(function (item) {",
+							"    if (item.category === \"Javascript\") {",
+							"        pm.environment.set(\"course\", item.course);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Validates there is at least one Javascript course\", () => {",
+							"    const javascriptCourses = jsonData.data.filter(item => item.category === \"Javascript\");",
+							"    pm.expect(javascriptCourses).to.have.length.above(0);",
+							"});",
+							"",
+							"pm.test(\"Validates the course name is Postman\", () => {",
+							"    const javascriptCourses = jsonData.data.filter(item => item.category === \"Javascript\");",
+							"    pm.expect(javascriptCourses[0].course).to.eql(\"Postman\");",
+							"});",
+							"",
+							"pm.test(\"Validates the price of Javascript courses is greater than 0\", () => {",
+							"    const javascriptCourses = jsonData.data.filter(item => item.category === \"Javascript\");",
+							"    pm.expect(javascriptCourses[0].price).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Validates that all courses have a defined price\", () => {",
+							"    jsonData.data.forEach(item => {",
+							"        pm.expect(item.price).to.not.be.null;",
+							"        pm.expect(item.price).to.not.be.undefined;",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"Validates all courses have a price greater than 0\", () => {",
+							"    jsonData.data.forEach(item => {",
+							"        pm.expect(item.price).to.be.above(0);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"Validates there are no duplicate courses\", () => {",
+							"    const courseNames = jsonData.data.map(item => item.course); ",
+							"    const uniqueCourseNames = [...new Set(courseNames)]; ",
+							"    pm.expect(uniqueCourseNames.length).to.eql(3);  ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{url}}/getApiTesting"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{url}}/getapitesting"
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"course\": \"Postman\",\n            \"price\": 150,\n            \"category\": \"Javascript\"\n        },\n        {\n            \"course\": \"SoapUI\",\n            \"price\": 25,\n            \"category\": \"Groovy\"\n        },\n        {\n            \"course\": \"RestAssured\",\n            \"price\": 100,\n            \"category\": \"Java\"\n        },\n        {\n            \"course\": \"RestAssured\",\n            \"price\": 100,\n            \"category\": \"Java\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "GetCourseDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validations students count\", () => {",
+							"    const jsonData = pm.response.json();",
+							"",
+							"pm.expect(jsonData.students > 10000).to.be.true;",
+							"pm.expect(jsonData.category).to.eql(\"Javascript\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/getcoursedetails?name={{course}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"getcoursedetails"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{course}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Rest Assured Query",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/getcoursedetails?name=RestAssured",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getcoursedetails"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "RestAssured"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"name\": \"RestAssured\",\n    \"category\": \"Java\",\n    \"content\": \"videos\",\n    \"length\": \"20hours\",\n    \"students\": 11100\n}"
+				},
+				{
+					"name": "Postman Query",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/getcoursedetails?name=Postman",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getcoursedetails"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Postman"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"name\": \"Postman\",\n    \"category\": \"Javascript\",\n    \"content\": \"videos\",\n    \"length\": \"10hours\",\n    \"students\": 13100\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://36b14d6b-9e37-4574-96c2-8e7dab32b4ed.mock.pstmn.io"
+		}
+	]
+}
