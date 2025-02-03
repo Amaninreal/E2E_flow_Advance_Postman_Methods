@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - main
+      - issue-*
   pull_request:
     branches:
       - main
+      - issue-*
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   run-postman-collection:
