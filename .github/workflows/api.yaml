@@ -1,3 +1,5 @@
+name: Advance Postman Collections
+
 on:
   push:
     branches:
