@@ -93,9 +93,4 @@ Test execution reports are generated in `newman_reports/`, and GitHub Actions lo
 2. **Commit changes** with meaningful messages.
 3. **Submit a pull request** for review.
 
-## 📞 Support
-For any issues, feel free to raise an issue in the repository or reach out via email.
-
----
-✨ **Happy Testing!** 🚀
 
