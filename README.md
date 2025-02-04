@@ -72,8 +72,8 @@ This project uses multiple environments for different testing scenarios:
 
 ## ⚙️ CI/CD Pipeline with GitHub Actions
 This project includes a GitHub Actions workflow (`api.yaml`) to automatically run Postman collections on:
-- **Push to `main` or `issue-*` branches**
-- **Pull requests to `main` or `issue-*` branches**
+- **Push to `main` or `feature-*` branches**
+- **Pull requests to `main` or `feature-*` branches**
 - **Scheduled daily runs**
 
 ### **Workflow Configuration**
