@@ -1,5 +1,3 @@
-name: Run Postman Collections and Generate Reports
-
 on:
   push:
     branches:
@@ -23,14 +21,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '20'
 
       - name: Install Newman and HTML Reporter
         run: |
           npm install -g newman
           npm install -g newman-reporter-htmlextra
 
-      # Run API Tests for User Management
       - name: Run Postman User Management Tests
         run: |
           mkdir -p newman_reports/user_management
@@ -40,17 +37,15 @@ jobs:
             --reporters cli,htmlextra \
             --reporter-htmlextra-export ./newman_reports/user_management/user_management_report.html
 
-      # Run API Tests with Dynamic Data (CSV)
       - name: Run API Tests with CSV Data
         run: |
           mkdir -p newman_reports/external_data_csv
           newman run "Collections/Library_Using_CSV.postman_collection.json" \
             --environment "Environment Files/UAT.postman_environment.json" \
-            -d ./booksData - Sheet1.csv \
+            -d "booksData_Sheet1.csv" \
             --reporters cli,htmlextra \
             --reporter-htmlextra-export ./newman_reports/external_data_csv/external_data_csv_report.html
 
-      # Run Mock Server Tests
       - name: Run Postman Mock Server Tests
         run: |
           mkdir -p newman_reports/mock
@@ -59,14 +54,12 @@ jobs:
             --reporters cli,htmlextra \
             --reporter-htmlextra-export ./newman_reports/mock/mock_test_report.html
 
-      # Trigger Postman Monitor via API
       - name: Trigger Postman Monitor
         run: |
           curl --request POST \
-          --url https://api.getpostman.com/monitors/{monitor-id}/run \
+          --url https://api.getpostman.com/monitors/YOUR_MONITOR_ID/run \
           --header "X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}"
 
-      # Upload Reports as Artifacts
       - name: Upload User Management Report
         uses: actions/upload-artifact@v4
         with:
