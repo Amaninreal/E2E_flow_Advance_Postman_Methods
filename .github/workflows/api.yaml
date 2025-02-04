@@ -44,7 +44,7 @@ jobs:
           mkdir -p newman_reports/external_data_csv
           newman run "Collections/Library_Using_CSV.postman_collection.json" \
             --environment "Environment Files/UAT.postman_environment.json" \
-            -d "booksData-Sheet1.csv" \
+            -d "./booksData_Sheet1.csv" \
             --reporters cli,htmlextra \
             --reporter-htmlextra-export ./newman_reports/external_data_csv/external_data_csv_report.html
 
