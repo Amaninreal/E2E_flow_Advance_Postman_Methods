@@ -1,0 +1,81 @@
+name: Advance Postman Collections
+
+on:
+  push:
+    branches:
+      - main
+      - feature-branch
+  pull_request:
+    branches:
+      - main
+      - feature-branch
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  run-postman-collection:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Newman and HTML Reporter
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
+      - name: Run Postman User Management Tests
+        run: |
+          mkdir -p newman_reports/user_management
+          newman run "Collections/Postman_GoRest_Assignment.postman_collection.json" \
+            --environment "Environment Files/Staged.postman_environment.json" \
+            --folder "User Management" \
+            --reporters cli,htmlextra \
+            --reporter-htmlextra-export ./newman_reports/user_management/user_management_report.html
+
+      - name: Run API Tests with CSV Data
+        run: |
+          mkdir -p newman_reports/external_data_csv
+          newman run "Collections/Library_Using_CSV.postman_collection.json" \
+            --environment "Environment Files/UAT.postman_environment.json" \
+            -d "./booksData_Sheet1.csv" \
+            --reporters cli,htmlextra \
+            --reporter-htmlextra-export ./newman_reports/external_data_csv/external_data_csv_report.html
+
+      - name: Run Postman Mock Server Tests
+        run: |
+          mkdir -p newman_reports/mock
+          newman run "Collections/MockEndPoint.postman_collection.json" \
+            --environment "Environment Files/MockEndPoint.postman_environment.json" \
+            --reporters cli,htmlextra \
+            --reporter-htmlextra-export ./newman_reports/mock/mock_test_report.html
+
+      - name: Trigger Postman Monitor
+        run: |
+          curl --request POST \
+          --url https://api.getpostman.com/monitors/YOUR_MONITOR_ID/run \
+          --header "X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}"
+
+      - name: Upload User Management Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: user-management-report
+          path: newman_reports/user_management
+
+      - name: Upload Dynamic Data Handling Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dynamic-data-report
+          path: newman_reports/external_data_csv
+
+      - name: Upload Mock Server Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: mock-server-report
+          path: newman_reports/mock
