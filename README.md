@@ -93,7 +93,7 @@ Test execution reports are generated in `newman_reports/`, and GitHub Actions lo
 
 **User Management**
 
-![alt text](Screenshot_4-2-2025_123248_.jpeg)
+![alt text](image.png)
 
 ## Contribution Guidelines
 1. **Fork the repository** and create a feature branch.
