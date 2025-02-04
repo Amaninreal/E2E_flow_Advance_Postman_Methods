@@ -63,6 +63,13 @@ newman run "Collections/MockEndPoint.postman_collection.json" \
   --reporter-htmlextra-export ./newman_reports/mock_test_report.html
 ```
 
+## 🌍 Environments Used
+This project uses multiple environments for different testing scenarios:
+- **UAT** - User Acceptance Testing
+- **STAGED** - Staging Environment
+- **QA** - Quality Assurance
+- **MockEndPoint** - Mock API Testing
+
 ## ⚙️ CI/CD Pipeline with GitHub Actions
 This project includes a GitHub Actions workflow (`api.yaml`) to automatically run Postman collections on:
 - **Push to `main` or `issue-*` branches**
