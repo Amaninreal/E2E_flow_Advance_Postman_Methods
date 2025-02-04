@@ -3,10 +3,12 @@ on:
     branches:
       - main
       - issue-*
+      - feature-branch
   pull_request:
     branches:
       - main
       - issue-*
+      - feature-branch
   schedule:
     - cron: '0 0 * * *'
 
