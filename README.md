@@ -63,7 +63,7 @@ newman run "Collections/MockEndPoint.postman_collection.json" \
   --reporter-htmlextra-export ./newman_reports/mock_test_report.html
 ```
 
-## 🌍 Environments Used
+## Environments Used
 This project uses multiple environments for different testing scenarios:
 - **UAT** - User Acceptance Testing
 - **STAGED** - Staging Environment
@@ -95,7 +95,7 @@ Test execution reports are generated in `newman_reports/`, and GitHub Actions lo
 
 ![alt text](Screenshot_4-2-2025_123248_.jpeg)
 
-## 📝 Contribution Guidelines
+## Contribution Guidelines
 1. **Fork the repository** and create a feature branch.
 2. **Commit changes** with meaningful messages.
 3. **Submit a pull request** for review.
